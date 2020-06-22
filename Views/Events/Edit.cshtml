@@ -1,0 +1,19 @@
+﻿
+@{ 
+    ViewBag.title = $"Edit Event {ViewBag.eventToEdit.Name} (id={ViewBag.eventToEdit.Id})";
+}
+<h1><b>Edit Event</b></h1>
+<form method="post" action="/events/edit">
+    <div class="form-group">
+        <label>
+            Name
+            <input value="@ViewBag.eventToEdit.Name" type="text" name="name" class="form-control">
+        </label>
+        <label>
+            Description
+            <input value="@ViewBag.eventToEdit.Description" type="text" name="description" class="form-control">
+        </label>
+        <input type="hidden" value="@ViewBag.eventToEdit.Id" name="eventId" />
+        <input type="submit" value="Submit" />
+    </div>
+</form>
