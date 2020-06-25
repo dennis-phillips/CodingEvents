@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Mvc;
 using CodingEvents.Models;
 using CodingEvents.wwwroot;
 using CodingEvents.wwwroot.Data;
+using CodingEvents.ViewModels;
 
 namespace CodingEvents.Controllers
 {
@@ -19,22 +20,38 @@ namespace CodingEvents.Controllers
         public IActionResult Index()
         {
             //ViewBag.title = "Hello Moe";
-            ViewBag.events = EventData.GetAll();
-            return View();
+            List<Event> events = new List<Event>(EventData.GetAll());
+            return View(events);
         }
         [HttpGet]
         public IActionResult Add()
         {
-            return View();
+            AddEventViewModel addEventViewModel = new AddEventViewModel();
+            return View(addEventViewModel);
         }
 
         [HttpPost]
-        [Route("/Events/Add")]
-        public IActionResult NewEvent(Event newEvent)
-        {
-            EventData.Add(newEvent);
 
-            return Redirect("/Events");
+        public IActionResult Add(AddEventViewModel addEventViewModel)
+        {
+            if (ModelState.IsValid)
+            {
+                Event newEvent = new Event
+                {
+                    Name = addEventViewModel.Name,
+                    Description = addEventViewModel.Description,
+                    ContactEmail = addEventViewModel.ContactEmail,
+                    Location = addEventViewModel.Location,
+                    NumberAttendees =addEventViewModel.NumberAttendees
+
+                };
+                EventData.Add(newEvent);
+
+                return Redirect("/Events");
+            }
+
+            return View(addEventViewModel);
+           
         }
         public IActionResult Delete()
         {

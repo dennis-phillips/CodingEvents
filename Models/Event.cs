@@ -12,12 +12,21 @@ namespace CodingEvents.Models
 
         public int Id { get; }
         static private int nextId = 1;
-        public Event(string name, string description)
+
+        public string ContactEmail { get; set; }
+        public string Location { get; set; }
+
+        public int NumberAttendees { get; set; }
+        public Event(string name, string description, string contactEmail, string location, int numberAttendees)
         {
             Name = name;
             Description = description;
             Id = nextId;
             nextId++;
+            ContactEmail = contactEmail;
+            Location = location;
+            NumberAttendees = numberAttendees;
+            
         }
 
         public Event()
